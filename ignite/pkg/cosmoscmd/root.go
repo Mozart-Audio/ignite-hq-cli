@@ -31,6 +31,8 @@ import (
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 	"github.com/tendermint/tendermint/libs/log"
 	dbm "github.com/tendermint/tm-db"
+
+	stdlog "log"
 )
 
 type (
@@ -125,6 +127,8 @@ func NewRootCmd(
 ) (*cobra.Command, EncodingConfig) {
 	rootOptions := newRootOptions(options...)
 
+	// Set mm properties related to config
+
 	// Set config for prefixes
 	SetPrefixes(accountAddressPrefix)
 
@@ -155,6 +159,10 @@ func NewRootCmd(
 			if err != nil {
 				return err
 			}
+
+
+			stdlog.Println(initClientCtx)
+
 
 			if err := client.SetCmdClientContextHandler(initClientCtx, cmd); err != nil {
 				return err
